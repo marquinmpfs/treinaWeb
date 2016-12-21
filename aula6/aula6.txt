@@ -1,0 +1,8 @@
+TwoWayDataBind == view / controller
+
+OneWayDataBind == somente view (apenas uma via)
+Ex: {{::nome}}
+os "::" refere-se para indicar que é OneWay...
+
+ng-repeat>> o repeater com track by $index, serve para corrigir erros de não renderização se houver elementos repetidos dentro da aplicação.
+EX:<li ng-repeat="item in lista track by $index" >Item</li>
