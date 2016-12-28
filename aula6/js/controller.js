@@ -20,9 +20,16 @@ angular.module("minhaPizza")
 		remover: function(index){
 			$scope.Pizza.ingredientes.splice(index, 1);
 		}
-	}
+	};
 
 	$scope.formatoPizza = function () {
 		return 'pizza-formato ' + ($scope.Pizza.formato === "Redonda" ? "pizza-redonda" : "pizza-quadrada");
+	};
+
+	$scope.precoPizza = function(){
+		var total = $scope.Pizza.ingredientes.length * 1.5;
+		total += ($scope.Pizza.formato === 'Redonda' ? 2 : 5);
+		total += ($scope.Pizza.local === 'Entrega' ? 5 : 0);
+		return total;
 	}
 }]);
