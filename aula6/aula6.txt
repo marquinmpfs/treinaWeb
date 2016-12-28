@@ -6,3 +6,14 @@ os "::" refere-se para indicar que é OneWay...
 
 ng-repeat>> o repeater com track by $index, serve para corrigir erros de não renderização se houver elementos repetidos dentro da aplicação.
 EX:<li ng-repeat="item in lista track by $index" >Item</li>
+
+ng-include >> serve para enviar para um caminho diferente. 
+Ex:
+<body ng-controller="meuController">
+    
+	<div ng-include="'minhaPartial.html'" ></div>
+
+</body>
+o "minhaPartial.html" está em aspas simples e duplas devido o ng-include esperar uma váriavel que contenha uma string com o caminho do arquivo.
+
+$index =>> informa qual posição do elemento desejado. 
