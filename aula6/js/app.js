@@ -1,1 +1,1 @@
-angular.module("minhaPizza", [])
+angular.module("minhaPizza", ["ngRoute"])
