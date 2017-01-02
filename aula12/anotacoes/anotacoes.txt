@@ -1,0 +1,172 @@
+﻿TwoWayDataBind == view / controller
+
+OneWayDataBind == somente view (apenas uma via)
+Ex: {{::nome}}
+os "::" refere-se para indicar que é OneWay...
+
+ng-repeat>> o repeater com track by $index, serve para corrigir erros de não renderização se houver elementos repetidos dentro da aplicação.
+EX:<li ng-repeat="item in lista track by $index" >Item</li>
+
+ng-include >> serve para enviar para um caminho diferente. 
+Ex:
+<body ng-controller="meuController">
+    
+	<div ng-include="'minhaPartial.html'" ></div>
+
+</body>
+o "minhaPartial.html" está em aspas simples e duplas devido o ng-include esperar uma váriavel que contenha uma string com o caminho do arquivo.
+
+$index =>> indice interno do laço ng-repeat, serve para pegar a posição desejada. 
+
+==================================================================
+
+"filter" ==> Para utilizar o filter no angular, o mesmo deve sempre retornar uma função no filter...
+Ex: 
+
+angular.module("minhaPizza")
+
+.filter("reaisFilter", function(){
+	return function(input){
+
+	}
+});
+
+isNaN == verifica se é tipo "string"
+!isNaN == verifica se é tipo "number"
+toFixed = força a ter quantidade de casas decimais
+Ex: toFixed(2), força a ter duas casas decimais
+replace == modifica algo.
+ex:
+replace(".", ",") neste caso irá tirar o "." e substituir por ","
+
+
+==================================================================
+
+Directives
+
+returna um JSON
+Ex:
+.directive("radioButton", function(){
+    return{
+        restrict: "E" ==> tipo da restrict,
+	template: Ex: <div>Cria a própria templete </div> ou
+	templateUrl: Ex: "directives/radioButton.html"Utiliza uma template já criada,
+	scope: Aqui serão acrescentados quais atributos, elementos que serão utilizados na directiva.
+	{
+	     options: '=options' fazer bind dos valores "="
+	     value: '=value'
+	}
+	link: Serve para criar função dentro da directiva.
+	a função contém:
+	function(
+	scope == igual o angular
+	elem == o tipo do elemento da templete
+	attbr == o atributo do elemento
+
+	function(){
+	     //O codigo aqui...
+	}
+	
+
+    }
+});
+
+Tipos de restrict: 
+
+A = atributo
+Ex: 
+.directive("radioButton", function(){
+    return{
+        restrict: "A"
+    }
+});
+<div "radio-button" ==> Nome da diretiva criada></div>
+
+E = elemento
+
+Ex:
+<radio-button></radio-button>
+
+C = classe
+<div class="radio-button" ==> Nome da diretiva criada></div> (NÃO RECOMENDADO)
+
+===================================================================
+
+Entendendo o $scope
+
+* Através do $scope é que acontece os binds
+
+$interval ==> executa uma função a cada "x" segundos
+Ex: $interval(function(){
+	$scope.numero++;
+}, 1000);
+
+Se usar funções propriamente do Javascript o $scope não irá conseguir "exenchegar" o que está sendo modificado, para isso deverá usar a função $scope.$apply (força a atualização do angular)
+Ex:
+$interval(function(){
+	$scope.$apply(fuction(){
+	    $scope.numero++;
+ 	});
+}, 1000);
+
+----------------------------------------------------------
+
+Promisses
+
+$q => algo que vai ser feito no futuro
+
+Ex: pode ser utilizadas no serviço http
+
+var deffered = $q.defer(); ==> inicializa o queue;
+
+deffered.resolve() ==> indica que a função finalizada.
+
+return deffered.promise; ==> retorna a promessa;
+
+minhaPromise().then(function(){} ==> usada para callback, após ser resolvida.
+
+----------------------------------------------------------
+Todos são singleton;
+SERVICE ==> acessa através do "this", intância um novo "service" [objeto] com a instrução passada, então não tem como escolher o que vai ser passado.
+Ex:
+.controller('myCtrl', ['$scope', 'meuService', function(){
+	$scope.name1 = meuService.name;
+}])
+
+.service('meuService', function(){
+	this.name = 'Meu service'
+})
+FACTORY ==> Irá retornar exatamente o que estiver no return, então na factory posso escolher o que vai ser retornado, é utilizado quando deseja guardar valores que seja utilizado posteriormente.
+
+.controller('myCtrl', ['$scope', 'meuService', 'minhaFactory', function(){
+	$scope.name1 = meuService.name;
+	$scope.name2 = minhaFactory.name;
+}])
+
+.factory('minhaFactory', function(){
+	return{
+		name: 'Minha Factory'
+	}
+})
+PROVIDER ==> acessa através do "this.$get", é o mais customizado entre dos três, podemos configurar como o provider será utilizado.
+
+Ex:
+
+.value('ProviderName', 'MeuProvider')
+
+.controller('myCtrl', ['$scope', 'meuService', 'minhaFactory', function(){
+	$scope.name1 = meuService.name;
+	$scope.name2 = minhaFactory.name;
+}])
+
+.factory('meuProvider', function(){
+	this.$get = function(ProviderName){
+		this.name = ProviderName;
+		return this;
+	}
+})
+
+=======================================================================
+
+
+
